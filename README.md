@@ -43,7 +43,7 @@ This class represents an Item in an order. It is asscoiated with an Order and mu
 
 
 ### Ingredient
-This class represents an Ingredient. It is asscoiated with an Ingredient and multiple Nutrition.
+This class represents an Ingredient. It is asscoiated with an Item and multiple Nutrition.
 - A constructor that initializes item, name, customized and calorie. 
 - getName() - Returns a String that is the name of the Ingredient 
 - getCustomized() - Returns a String that is for customized option of the ingredient
