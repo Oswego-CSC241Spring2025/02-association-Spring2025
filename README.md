@@ -38,7 +38,7 @@ This class represents an Item in an order. It is asscoiated with an Order and mu
 - getOrder() - Return a reference to the Order object associated with this Item 
 - getName() - Returns a String that is the name of an item 
 - getQuantity() - Returns an int that is the number of item ordered 
-- addIngredients(Ingredients) - Add an Ingredient to this Item 
+- addIngredient(Ingredient) - Add an Ingredient to this Item 
 - getIngredients() - Returns an array of Ingredient object references
 
 
@@ -46,11 +46,11 @@ This class represents an Item in an order. It is asscoiated with an Order and mu
 This class represents an Ingredient. It is asscoiated with an Ingredient and multiple Nutrition.
 - A constructor that initializes item, name, customized and calorie. 
 - getName() - Returns a String that is the name of the Ingredient 
-- getCustomized - Returns a String that is for customized option of the ingredient
+- getCustomized() - Returns a String that is for customized option of the ingredient
 - getItem() - Returns a reference to the Item 
 - getCalorie() - Returns a double showing the calorie of the ingredient 
 - addNutrition(Nutrition) - Adds a Nutrition to an Ingredient 
-- getNutritions - Returns an array of Nutrition objects
+- getNutritions() - Returns an array of Nutrition objects
 
 
 ### Nutrition

@@ -11,7 +11,7 @@ public class Ingredient {
 
   // getName() - Returns a String that is the name of the Ingredient
 
-  // getCustomized - Returns a String that is for customized option of the ingredient
+  // getCustomized() - Returns a String that is for customized option of the ingredient
 
   // getItem() - Returns a reference to the Item
 
@@ -19,6 +19,6 @@ public class Ingredient {
 
   // addNutrition(Nutrition) - Adds a Nutrition to an Ingredient
 
-  // getNutritions - Returns an array of Nutrition objects
+  // getNutritions() - Returns an array of Nutrition objects
 
 }

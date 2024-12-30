@@ -16,7 +16,7 @@ public class Item {
 
 //getQuantity() - Returns a int that is the number of item ordered
 
-//addIngredients(Ingredients) - Add an Ingredient to this Item
+//addIngredient(Ingredient) - Add an Ingredient to this Item
 
 //getIngredients() - Returns an array of Ingredients object references
 

@@ -107,7 +107,7 @@ class AssociationsTest {
     assertEquals(0, ingre1.getNutritions().length, "Initial Nutritions length test");
 
     // Check that we can add a device to a room
-    item1.addIngredients(ingre1);
+    item1.addIngredient(ingre1);
     assertEquals(1, item1.getIngredients().length, "Testing Ingredients array length");
   }
 
