@@ -1,123 +1,141 @@
 package associations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import java.lang.reflect.Modifier;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class AssociationsTest {
 
   @Test
   void customerTest() {
     // Instantiate a customer
-    Customer c1 = new Customer("Early", "James");
-    assertEquals("Early", c1.getLastName(), "Last name test");
-    assertEquals("James", c1.getFirstName(), "First name test");
-    assertNull(c1.getBuilding(), "Initial Building reference should be null");
+    Customer c1 = new Customer("Weihua", "Liu");
+    assertEquals("Liu", c1.getLastName(), "Last name test");
+    assertEquals("Weihua", c1.getFirstName(), "First name test");
+    assertNull(c1.getOrder(), "Initial Order reference should be null");
   }
 
   @Test
-  void buildingTest() {
+  void orderTest() {
     // Instantiate a customer
-    Customer c1 = new Customer("Early", "James");
-
-    // Create a building
-    Building b1 = new Building("home", 84.4, 57.7, c1);
-
-    // Check values
-    assertEquals("home", b1.getName(), "Name test");
-    assertEquals(84.4, b1.getLongitude(), "Longitude test");
-    assertEquals(57.7, b1.getLatitude(), "Latitude test");
-    assertEquals(c1, b1.getCustomer(), "Customer test");
-    assertEquals(0, b1.getRooms().length, "Initial rooms array length test");
-
-
-    // Associate building with customer
-    c1.setBuilding(b1);
-    assertEquals(b1, c1.getBuilding(), "Customer building test");
-  }
-
-  @Test
-  void roomTest() {
-    // Instantiate a customer
-    Customer c1 = new Customer("Early", "James");
-
-    // Instantiate a building
-    Building b1 = new Building("home", 84.4, 57.7, c1);
-
-    // Create a room
-    Room r1 = new Room("kitchen", "1st", b1);
-
-    // Check values
-    assertEquals("kitchen", r1.getName(), "Name test");
-    assertEquals("1st", r1.getFloor(), "Floor test");
-    assertEquals(0, r1.getDevices().length, "Initial devices array length test");
-    assertEquals(b1, r1.getBuilding(), "Building reference test");
-
-    // Associate with building
-    b1.addRoom(r1);
-    // Check that building was updated
-    assertEquals(1, b1.getRooms().length, "Testing rooms array length");
-  }
-
-  @Test
-  void deviceTest() {
-    // Instantiate a customer
-    Customer c1 = new Customer("Early", "James");
-
-    // Instantiate a building
-    Building b1 = new Building("home", 84.4, 57.7, c1);
-
-    // Instantiate a room
-    Room r1 = new Room("kitchen", "1st", b1);
-
-    // Create a device
-    Device d1 = new Device("abcd-1234", "Temperature",  r1, "Bottom of west wall");
-
-    // Check values
-    assertEquals("abcd-1234", d1.getId(), "Id test");
-    assertEquals("Temperature", d1.getType(), "Type test");
-    assertEquals(r1, d1.getRoom(), "Room reference test");
-    assertEquals("Bottom of west wall", d1.getLocation(), "Location test");
-    assertEquals(0, d1.getReadings().length, "Initial Readings length test");
-
-    // Check that we can add a device to a room
-    r1.addDevice(d1);
-    assertEquals(1, r1.getDevices().length, "Testing devices array length");
-  }
-
-  @Test
-  void readingTest() {
-    // Instantiate a customer
-    Customer c1 = new Customer("Early", "James");
-
-    // Instantiate a building
-    Building b1 = new Building("home", 84.4, 57.7, c1);
-
-    // Instantiate a room
-    Room r1 = new Room("kitchen", "1st", b1);
-
-    // Instantiate a device
-    Device d1 = new Device("abcd-1234", "Temperature",  r1, "Bottom of west wall");
-
-    // Create a reading
-    LocalDateTime now = LocalDateTime.now(); // Get system time
-    Reading rd1 = new Reading(d1, "Degrees F", 67.5);
-    long delta = Duration.between(now,rd1.getTimestamp()).toMillis();
+    Customer c1 = new Customer("Weihua", "Liu");
+    // Create an Order
+    Order o1 = new Order("KL09M", LocalDateTime.now(), c1);
+    //check orderTime
+    long delta = Duration.between(LocalDateTime.now(), o1.getOrderTime()).toMillis();
     System.out.println("DELTA: " + delta);
-
-    // Check values
-    assertEquals(d1, rd1.getDevice(), "Device reference test");
-    assertEquals("Degrees F", rd1.getUnits(), "Units test");
-    assertEquals(67.5, rd1.getValue(), "Value test");
     assertTrue(delta < 4, "Timestamp less than 4ms");
 
+    //check orderNum, customer
+    assertEquals("KL09M", o1.getOrderNum(), "Order number test");
+    assertEquals(c1, o1.getCustomer(), "Customer test");
+    assertEquals(0, o1.getItems().length, "Initial rooms array length test");
+
+
+    //  Associate order with customer
+    c1.setOrder(o1);
+    assertEquals(o1, c1.getOrder(), "Customer building test");
+  }
+
+  @Test void inspectPublicModifier() {
+    // Make sure Order is public
+    try {
+      Class<?> c1 = Class.forName("associations.Order");
+      Class<?> c2 = Class.forName("associations.Customer");
+      // Inspect modifiers
+      String modifiers1 = Modifier.toString(c1.getModifiers());
+      String modifiers2 = Modifier.toString(c2.getModifiers());
+      assertEquals(modifiers1, "public", "Order is not 'public'");
+      assertEquals(modifiers2, "public", "Customer is not 'public'");
+    } catch (Exception e){
+      // Report exception
+      fail("Could not inspect Order class");
+    }
+
+  }
+
+  @Test
+  void itemTest() {
+    // Instantiate a customer
+    Customer c1 = new Customer("Weihua", "Liu");
+
+    // Instantiate an Order
+    Order b1 = new Order("KI908B", LocalDateTime.now(),c1);
+
+    // Create an Item
+    Item r1 = new Item("Bergers", b1,"Spicy Crispy",2);
+
+    // Check values
+    assertEquals("Bergers", r1.getType(), "Type test");
+    assertEquals(b1, r1.getOrder(), "Order reference test");
+    assertEquals("Spicy Crispy", r1.getName(), "Name test");
+    assertEquals(2, r1.getQuantity(), "Quantity test");
+
+    assertEquals(0, r1.getIngredients().length, "Initial Ingredients array length test");
+
+
+    // Associate with building
+    b1.addItems(r1);
+    // Check that building was updated
+    assertEquals(1, b1.getItems().length, "Testing rooms array length");
+  }
+
+  @Test
+  void IngredientTest() {
+    // Instantiate a customer
+    Customer c1 = new Customer("Weihua", "Liu");
+
+    // Instantiate an Order
+    Order o1 = new Order("KI908B", LocalDateTime.now(),c1);
+
+    // Create an Item
+    Item item1 = new Item("Bergers", o1,"Spicy Crispy",2);
+
+    // Create an Ingredient
+    Ingredient ingre1 = new Ingredient(item1, "Potato Roll", "regular", 100.00);
+
+    // Check values
+
+    assertEquals(item1, ingre1.getItem(), "Item reference test");
+    assertEquals("Potato Roll", ingre1.getName(), "Name test");
+    assertEquals("regular", ingre1.getCustomized(), "Customized test");
+    assertEquals(100.00, ingre1.getCalorie(), "Calorie test");
+    assertEquals(0, ingre1.getNutritions().length, "Initial Nutritions length test");
+
+    // Check that we can add a device to a room
+    item1.addIngredients(ingre1);
+    assertEquals(1, item1.getIngredients().length, "Testing Ingredients array length");
+  }
+
+  @Test
+  void nutritionTest()  {
+    // Instantiate a customer
+    Customer c1 = new Customer("Weihua", "Liu");
+
+    // Instantiate an Order
+    Order o1 = new Order("KI908B", LocalDateTime.now(),c1);
+
+    // Create an Item
+    Item item1 = new Item("Bergers", o1,"Spicy Crispy",2);
+
+    // Create an Ingredient
+    Ingredient ingre1 = new Ingredient(item1, "Potato Roll", "regular", 100.00);
+
+    // Create a Nutrition
+    Nutrition n1=new Nutrition(ingre1,"Calcium","mcg", 30);
+
+    // Check values
+    assertEquals(ingre1, n1.getIngredient(), "Ingredient reference test");
+    assertEquals("mcg", n1.getUnits(), "Unit test");
+    assertEquals(30,n1.getAmount(), "Amount test");
+    assertEquals("Calcium",n1.getName(), "Name test");
+
     // Add reading to a device
-    d1.addReading(rd1);
+    ingre1.addNutrition(n1);
     // Check that reading was added
-    assertEquals(1, d1.getReadings().length, "Testing readings array length");
+    assertEquals(1, ingre1.getNutritions().length, "Testing readings array length");
   }
 }

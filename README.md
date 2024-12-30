@@ -1,30 +1,38 @@
-# CSC 241 Class Associations
-In this assignment, you will create a set of Java classes with associations between them. We are going to use these classes to simulate the data used by a home automation system. These will allow us to work with information about sensor devices, rooms, and buildings.
+# CSC 241 Design Classes
+# All About Bergers Restaurant  
+In this assignment, you will create a set of Java classes with associations between them.
+We are going to use these classes to simulate the data using for the All About Bergers Restaurant . 
+These will allow us to work with information about customers, orders and items in the orders.
 
 Read the specification below for each Java class. Empty source files for each class have been placed in the `src/main/java/associations` folder, and you should edit each as necessary. Each of these class definitions will require instance variables, so you should determine the name and type of each to support the required methods. In general, all instance variables should be declared `private`. Make sure to follow the exact naming conventions listed in the specification.
 
 ## Specification
 
 ### Customer
-This class represents a person using the system. Implement each of these methods:
+This class represents a customer visiting the restaurant. Implement each of these methods:
+
+- A constructor that initializes the last name and first name
 - getLastName() - Returns a String that is the customer’s last name
 - getFirstName() - Returns a String that is the customer’s first name
-- getBuilding() - Returns a reference to the Building object (see below) associated with this customer
-- setBuilding(Building) - Sets the Building for this customer
-- A constructor that initializes the last name and first name.
+- getOrder() - Returns a reference to the Order object associated with this customer
+- setOrder(Order) - Sets the Order for this customer
 
-### Building
-This class represents a building that is being monitored. A building is associated with a Customer and multiple Rooms.  Implement each of the following methods:
-- getName() - returns a String that is the name of the building
-- getLongitude - returns a double that is the building's longitude
-- getLatitude - returns a double that is the building's latitude
-- getCustomer() - Returns a reference to the Customer object associated with this building
-- addRoom(Room) - Adds a Room object reference (see below) to a building
-- getRooms() - Returns an array of Room objects associated with a building
-- A constructor that initializes the name, longitude, latitude, and Customer
+### Order
+This class represents an order placed by a customer. An Order is associated with a Customer and multiple Items.  Implement each of the following methods:
+- A constructor that initializes the orderNum,orderTime and customer 
+  - note 1: pay attention on the type of orderTime. 
+  - note 2: Don't forget to create the empty item arraylist.
 
-### Room
-This class represents a Room. It is asscoiated with a Building and multiple Devices.
+- getOrderNum() - returns a String that is the order's order number 
+- getOrderTime() - Returns a reference to LocalDateTime object that is the time an order is placed 
+- getCustomer() - Returns a reference to the Customer object associated with this building 
+- addItem(Item) - Adds an Item object reference to an order 
+- getItems() - Returns an array of Item objects associated with an order 
+  - note: Use ArrayList to hold all the Item object in an order. But this method will return an array of Item objects.
+
+
+### Item
+This class represents an Item. It is asscoiated with an Order and multiple Ingredient.
 - getName() - Returns a String that is the room name
 - getFloor() - Returns a String that is the room's floor within the building
 - getBuilding() - Returns a reference to the associated Building object
@@ -32,23 +40,24 @@ This class represents a Room. It is asscoiated with a Building and multiple Devi
 - getDevices() - Returns an array of Device object references
 - A constructor that initializes the name, floor, and building
 
-### Device
-This class represents an individual sensor device. A device can produce multiple Readings.
-- getId() - Returns a String that is the sensor's identifier
-- getType() - Returns a String that is the sensor's type
-- getRoom() - Returns a reference to the Room where the sensor is located
-- getLocation() - Returns a String indicating where in the Room the device was placed
-- addReading(Reading) - Adds a Reading (see below) to a device
-- getReadings() - Returns an array of device readings 
-- A constructor that initializes id, type, room, and location
+### Ingredient
+This class represents an Ingredient. It is asscoiated with an Ingredient and some Nutrition.
+- A constructor that initializes the type,order, name and quantity 
+- getType() - Returns a String that is the type of an item 
+- getOrder() - Return a reference to the Order object associated with this Item 
+- getName() - Returns a String that is the name of an item 
+- getQuantity() - Returns a int that is the number of item ordered 
+- addIngredients(Ingredients) - Add an Ingredient to this Item 
+- getIngredients() - Returns an array of Ingredients object references
 
-### Reading
-This class represents a reading produced by a device
-- getDevice() - returns a reference to the Device that produced the reading
-- getUnits() - returns a String representing the units of measurement
-- getValue() - returns a double corresponding to the reading's value
-- getTimestamp() - Returns a reference to LocalDateTime object that is the timestamp of the reading
-- A constructor method that initializes the Device, units, and value, and sets the timestamp to the current system time
+
+### Nutrition
+This class represents the Nutrition included in an ingredient 
+- A constructor method that initializes the Ingredient, name, units,and amount.
+- getIngredient() - returns a reference to the Ingredient that contains this nutrition. 
+- getUnits() - returns a String representing the units of measurement 
+- getAmount() - returns a double corresponding to the nutrition's value 
+- getName() - Returns String representing the name of the nutrition
 
 ## Testing
 When you push your code back to your repository, GitHub will initiate a series of tests to verify the correct operation of each of the methods above.

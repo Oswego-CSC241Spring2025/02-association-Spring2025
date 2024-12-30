@@ -1,23 +1,30 @@
 package associations;
 
+import java.time.LocalDateTime;
+
 public class Main {
   /**
    * Use this method to instantiate objects and test your code.
    */
   public static void main(String[] args) {
-    Customer c1 = new Customer("Toler", "Larry");
-    Building b1 = new Building("home", 84.4, 57.7, c1);
-    c1.setBuilding(b1);
-    Room rm1 = new Room("kitchen", "1st", b1);
-    Device d1 = new Device("1234-abcd", "temperature", rm1, "bottom of the west wall");
-    Reading r1 = new Reading(d1, "degrees F", 72);
-    Reading r2 = new Reading(d1, "degrees F", 72.5);
+
+
+    Customer c1 = new Customer("Weihua", "Liu");
+    Order o1 = new Order("KI908B", LocalDateTime.now(),c1);
+    Item item1 = new Item("Bergers", o1,"Spicy Crispy",2);
+    Ingredient ingre1 = new Ingredient(item1, "Potato Roll", "regular", 100.00);
+    Nutrition n1=new Nutrition(ingre1,"Calcium","mcg", 30);
+    Nutrition n2=new Nutrition(ingre1,"Cholesterol","mcg", 70);
+
+    c1.setOrder(o1);
+    ingre1.addNutrition(n1);
+    ingre1.addNutrition(n2);
 
     // Show
-    for (Reading r: d1.getReadings()) {
-      System.out.println(r);
+    for (Nutrition n: ingre1.getNutritions()) {
+      System.out.println(n);
     }
 
   }
-  
+
 }
