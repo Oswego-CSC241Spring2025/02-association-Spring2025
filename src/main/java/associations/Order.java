@@ -10,6 +10,8 @@ public class Order {
     //note 1: pay attention on the type of orderTime.
     //note 2: Don't forget to create the empty item arraylist.
 
+//getOrderType() - returns a String representing the type of the order
+
 // getOrderNum() - returns a String that is the order's order number
 
 // getOrderTime() - Returns a reference to LocalDateTime object that is the time an order is placed

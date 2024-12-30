@@ -8,11 +8,19 @@ public class Main {
    */
   public static void main(String[] args) {
 
-
+    // Instantiate a customer
     Customer c1 = new Customer("Weihua", "Liu");
-    Order o1 = new Order("KI908B", LocalDateTime.now(),c1);
+
+    // Instantiate an Order
+    Order o1 = new Order("Drive-through","KI908B", LocalDateTime.now(),c1);
+
+    // Create an Item
     Item item1 = new Item("Bergers", o1,"Spicy Crispy",2);
+
+    // Create an Ingredient
     Ingredient ingre1 = new Ingredient(item1, "Potato Roll", "regular", 100.00);
+
+    // Create a Nutrition
     Nutrition n1=new Nutrition(ingre1,"Calcium","mcg", 30);
     Nutrition n2=new Nutrition(ingre1,"Cholesterol","mcg", 70);
 
