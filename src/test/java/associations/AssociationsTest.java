@@ -23,14 +23,14 @@ class AssociationsTest {
     // Instantiate a customer
     Customer c1 = new Customer("Weihua", "Liu");
     // Create an Order
-    Order o1 = new Order("Dine-in","KL09M", LocalDateTime.now(), c1);
+    Order o1 = new Order("DineIn","KL09M", LocalDateTime.now(), c1);
     //check orderTime
     long delta = Duration.between(LocalDateTime.now(), o1.getOrderTime()).toMillis();
     System.out.println("DELTA: " + delta);
     assertTrue(delta < 4, "Timestamp less than 4ms");
 
     //check orderNum, customer
-    assertEquals("Dine-in", o1.getOrderType(), "Order Type test");
+    assertEquals("DineIn", o1.getOrderType(), "Order Type test");
     assertEquals("KL09M", o1.getOrderNum(), "Order number test");
     assertEquals(c1, o1.getCustomer(), "Customer test");
     assertEquals(0, o1.getItems().length, "Initial rooms array length test");
@@ -64,13 +64,13 @@ class AssociationsTest {
     Customer c1 = new Customer("Weihua", "Liu");
 
     // Instantiate an Order
-    Order b1 = new Order("Dine-in","KI908B", LocalDateTime.now(),c1);
+    Order b1 = new Order("DineIn","KI908B", LocalDateTime.now(),c1);
 
     // Create an Item
-    Item r1 = new Item("Bergers", b1,"Spicy Crispy",2);
+    Item r1 = new Item("Burger", b1,"Spicy Crispy",2);
 
     // Check values
-    assertEquals("Bergers", r1.getType(), "Type test");
+    assertEquals("Burger", r1.getType(), "Type test");
     assertEquals(b1, r1.getOrder(), "Order reference test");
     assertEquals("Spicy Crispy", r1.getName(), "Name test");
     assertEquals(2, r1.getQuantity(), "Quantity test");
